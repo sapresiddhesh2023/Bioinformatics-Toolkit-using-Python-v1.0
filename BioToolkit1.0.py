@@ -1,4 +1,23 @@
 """
+=====================================================================
+BIOINFORMATICS TOOLKIT USING PYTHON
+=====================================================================
+Author:  Dr.rer.nat. Siddhesh Uday Sapre
+Email:   sapresiddhesh2023@gmail.com
+Version: 1.0
+
+COPYRIGHT (c) 2026 Dr.rer.nat. Siddhesh Uday Sapre. All rights reserved.
+
+LICENSE AGREEMENT:
+This software and associated documentation files are free to use, copy, 
+and modify for academic, educational, and personal research purposes. 
+
+Any industrial or commercial use—including but not limited to 
+incorporation into commercial products, use in for-profit corporate 
+research, or providing as a paid service—is strictly prohibited without 
+prior written permission from the author.
+=====================================================================
+
 --- MAIN MENU DEFINITIONS ---
 Step 1 is Basic Input System to provide the query DNA sequence
 Step 2 is to check the validity of the DNA sequence
@@ -22,6 +41,9 @@ print("=" * 70)
 print("Author: Dr.rer.nat. Siddhesh Uday Sapre")
 print("Email: sapresiddhesh2023@gmail.com")
 print("Version: 1.0")
+print("Copyright (c) 2026. All rights reserved.")
+print("License: Free for academic and personal use. Commercial or")
+print("industrial use requires prior written permission from the author.")
 print("-" * 70)
 print("Step 1: Basic Input System to provide the query DNA sequence")
 print("Step 2: Check the validity of the DNA sequence")
@@ -454,106 +476,4 @@ if '7' in run_steps:
                     elif len_diff % 3 != 0:
                         mutation_type += " | Frameshift Mutation (High biological impact if in coding region)"
                     else:
-                        mutation_type += " | In-frame Indel (Repeat Expansion or Codon Deletion)"
-                        
-                    print(f"Mutation Profile: {mutation_type}")
-                    print(f"Net length difference: {len_diff} base(s)")
-                    
-                    divergence_index = -1
-                    for i in range(min(length_of_dna, len_dna2)):
-                        if dna[i] != dna2[i]:
-                            divergence_index = i
-                            break
-                            
-                    if divergence_index != -1:
-                        print(f"Sequences first diverge at Index {divergence_index}.")
-                        print(f" -> Base in Original Sequence: '{dna[divergence_index]}'")
-                        print(f" -> Base in Secondary Sequence: '{dna2[divergence_index]}'")
-                        print("Note: Due to frameshift/indel off-setting the string, precise downstream base-to-base comparison requires advanced sequence alignment tools.")
-                    else:
-                        divergence_index = min(length_of_dna, len_dna2)
-                        print(f"Sequences match completely up to Index {divergence_index - 1}.")
-                        print(f"The structural mutation begins exactly at Index {divergence_index}.")
-                        
-        elif compare_choice == "no" or compare_choice == "n":
-            print("\nSkipping comparative mutation analysis.")
-        else:
-            print("\nUnrecognized input. Skipping comparative mutation analysis.")
-
-
-# =====================================================================
-# STEP 8: Multi-Sequence FASTA Processing
-# =====================================================================
-if '8' in run_steps:
-    print("\n" + "="*50)
-    print("--- Step 8: Multi-Sequence FASTA Processing ---")
-    print("="*50)
-
-    """This is Step 8 where we handle multi-sequence FASTA files, extract names and 
-       sequences, organize data, and write basic analysis results directly to a file."""
-
-    print("MANDATORY REQUIREMENT: If you wish to process a FASTA file containing multiple sequences, the file MUST be located in the exact same folder as this Python script, OR you must provide the full, exact file path.\n")
-
-    multi_fasta_choice = input("Would you like to process a multi-sequence FASTA file and save results to a document? (Yes/No): ").strip().lower()
-
-    if multi_fasta_choice == "yes" or multi_fasta_choice == "y":
-        multi_filename = input("Enter the multi-sequence FASTA file name (e.g., sequences.fasta) or full path: ").strip(' "')
-        
-        sequence_data = [] 
-        current_name = ""
-        current_seq = ""
-        
-        try:
-            with open(multi_filename, "r") as m_file:
-                for line in m_file:
-                    line = line.strip() 
-                    
-                    if line.startswith(">"):
-                        if current_name != "":
-                            sequence_data.append((current_name, current_seq))
-                            
-                        current_name = line[1:] 
-                        current_seq = ""
-                    else:
-                        current_seq += line.upper().replace(" ", "")
-                        
-                if current_name != "":
-                    sequence_data.append((current_name, current_seq))
-                    
-            print(f"\nSuccessfully extracted {len(sequence_data)} sequences from {multi_filename}.")
-            print("Writing analysis to 'result.txt'...")
-            
-            with open("result.txt", "w") as result_file:
-                result_file.write("=== MULTI-SEQUENCE FASTA BATCH ANALYSIS ===\n")
-                result_file.write(f"Source File: {multi_filename}\n")
-                result_file.write(f"Total Sequences Analyzed: {len(sequence_data)}\n")
-                result_file.write("===========================================\n\n")
-                
-                for name, seq in sequence_data:
-                    seq_len = len(seq)
-                    g_count = seq.count("G")
-                    c_count = seq.count("C")
-                    a_count = seq.count("A")
-                    t_count = seq.count("T")
-                    
-                    if seq_len > 0:
-                        gc_percent = ((g_count + c_count) / seq_len) * 100
-                    else:
-                        gc_percent = 0
-                        
-                    # NOTE: This is the corrected line where the previous error occurred
-                    result_file.write(f"Sequence Header: {name}\n")
-                    result_file.write(f"Length:          {seq_len} bp\n")
-                    result_file.write(f"GC Content:      {round(gc_percent, 2)}%\n")
-                    result_file.write(f"Nucleotides:     A:{a_count} | T:{t_count} | G:{g_count} | C:{c_count}\n")
-                    result_file.write("-" * 45 + "\n\n")
-                    
-            print("Success! Data organization and analysis complete. Check your folder for 'result.txt'.")
-            
-        except FileNotFoundError:
-            print(f"\nError: The file '{multi_filename}' was not found. Please ensure it is in the correct folder and the name is spelled exactly right.")
-            
-    elif multi_fasta_choice == "no" or multi_fasta_choice == "n":
-        print("\nSkipping Multi-Sequence FASTA Processing.")
-    else:
-        print("\nUnrecognized input. Skipping Multi-Sequence FASTA Processing.")
+                        mutation_type
